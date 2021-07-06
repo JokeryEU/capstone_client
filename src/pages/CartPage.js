@@ -1,9 +1,17 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
+import {
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Card,
+  Button,
+  FormControl,
+} from 'react-bootstrap'
 import Message from '../components/Message'
-import Loader from '../components/Loader'
+
 import { addToCart, removeFromCart } from '../actions/cartActions'
 
 const CartPage = ({ match, location, history }) => {
