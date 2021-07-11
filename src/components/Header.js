@@ -15,9 +15,8 @@ import { logout } from '../actions/userActions'
 const Header = () => {
   const dispatch = useDispatch()
 
-  const userLogin = useSelector((state) => state)
-  const { userInfo } = userLogin.userLogin
-  const { cartItems } = userLogin.cart
+  const userLogin = useSelector((state) => (state.userLogin, state.cart))
+  const { userInfo, cartItems } = userLogin
 
   const logoutHandler = () => {
     dispatch(logout())
