@@ -8,18 +8,22 @@ import {
   Form,
   FormControl,
   Container,
+  Badge,
 } from 'react-bootstrap'
 import { logout } from '../actions/userActions'
 
 const Header = () => {
   const dispatch = useDispatch()
 
-  const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
+  const userLogin = useSelector((state) => state)
+  const { userInfo } = userLogin.userLogin
+  const { cartItems } = userLogin.cart
 
   const logoutHandler = () => {
     dispatch(logout())
   }
+
+  const calculateCartQty = cartItems.reduce((acc, item) => acc + item.qty, 0)
 
   return (
     <header>
@@ -33,6 +37,11 @@ const Header = () => {
             <Nav className="ml-auto">
               <LinkContainer to="/cart">
                 <Nav.Link>
+                  {cartItems.length > 0 ? (
+                    <Badge pill variant="danger">
+                      {calculateCartQty}
+                    </Badge>
+                  ) : null}
                   <i className="fas fa-shopping-cart" /> Cart
                 </Nav.Link>
               </LinkContainer>
