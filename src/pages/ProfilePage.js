@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Button, Row, Col, Form } from 'react-bootstrap'
+import { Table, Button, Row, Col, Form } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
+import { listMyOrders } from '../actions/orderActions'
 
 const ProfilePage = ({ location, history }) => {
   const [firstName, setFirstName] = useState('')
@@ -24,12 +26,20 @@ const ProfilePage = ({ location, history }) => {
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
   const { success, error: error1 } = userUpdateProfile
 
+  const orderListMyOrders = useSelector((state) => state.orderListMyOrders)
+  const {
+    loading: loadingOrders,
+    error: errorOrders,
+    orders,
+  } = orderListMyOrders
+
   useEffect(() => {
     if (!userInfo) {
       history.push('/login')
     } else {
       if (!user.firstName && !user.lastName) {
         dispatch(getUserDetails('profile'))
+        dispatch(listMyOrders())
       } else {
         setFirstName(user.firstName)
         setLastName(user.lastName)
@@ -87,7 +97,7 @@ const ProfilePage = ({ location, history }) => {
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
-              placeholder="Enter your password"
+              placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -108,6 +118,54 @@ const ProfilePage = ({ location, history }) => {
       </Col>
       <Col md={9}>
         <h2>My Orders</h2>
+        {loadingOrders ? (
+          <Loader />
+        ) : errorOrders ? (
+          <Message variant="danger">{errorOrders}</Message>
+        ) : (
+          <Table stripped bordered hover responsive className="table-sm">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>DATE</th>
+                <th>TOTAL</th>
+                <th>PAID</th>
+                <th>DELIVERED</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order._id}>
+                  <td>{order._id}</td>
+                  <td>{order.createdAt.substring(0, 10)}</td>
+                  <td>€{order.totalPrice}</td>
+                  <td className="text-center">
+                    {order.isPaid ? (
+                      order.paidAt.substring(0, 10)
+                    ) : (
+                      <i className="fas fa-times" style={{ color: 'red' }} />
+                    )}
+                  </td>
+                  <td className="text-center">
+                    {order.isDelivered ? (
+                      order.deliveredAt.substring(0, 10)
+                    ) : (
+                      <i className="fas fa-times" style={{ color: 'red' }} />
+                    )}
+                  </td>
+                  <td>
+                    <LinkContainer to={`/order/${order._id}`}>
+                      <Button className="btn-sm" variant="light">
+                        Details
+                      </Button>
+                    </LinkContainer>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        )}
       </Col>
     </Row>
   )

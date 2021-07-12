@@ -9,6 +9,9 @@ import {
   ORDER_PAY_REQUEST,
   ORDER_PAY_SUCCESS,
   ORDER_PAY_FAIL,
+  ORDER_LIST_MY_ORDERS_REQUEST,
+  ORDER_LIST_MY_ORDERS_SUCCESS,
+  ORDER_LIST_MY_ORDERS_FAIL,
 } from '../constants/orderConstants'
 
 export const createOrder = (order) => async (dispatch) => {
@@ -78,6 +81,30 @@ export const payOrder = (orderId, paymentResult) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ORDER_PAY_FAIL,
+      payload:
+        error.response && error.response.data
+          ? error.response.data
+          : error.message,
+    })
+  }
+}
+
+export const listMyOrders = () => async (dispatch) => {
+  try {
+    dispatch({ type: ORDER_LIST_MY_ORDERS_REQUEST })
+
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API_URL}/orders/myorders`,
+      { withCredentials: true }
+    )
+
+    dispatch({
+      type: ORDER_LIST_MY_ORDERS_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: ORDER_LIST_MY_ORDERS_FAIL,
       payload:
         error.response && error.response.data
           ? error.response.data

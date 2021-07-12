@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
-import { Button, Row, Col, Card, ListGroup, Image } from 'react-bootstrap'
+import { Row, Col, Card, ListGroup, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Message from '../components/Message'
@@ -32,7 +32,9 @@ const OrderPage = ({ match }) => {
       script.type = 'text/javascript'
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
       script.async = true
-      script.onLoad = () => setSdkReady(true)
+      script.onLoad = () => {
+        setSdkReady(true)
+      }
       document.body.appendChild(script)
     }
 
