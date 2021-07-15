@@ -22,6 +22,9 @@ import {
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
   USER_DELETE_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
 } from '../constants/userConstants'
 
 export const login = (email, password) => async (dispatch) => {
@@ -197,12 +200,36 @@ export const deleteUser = (id) => async (dispatch) => {
       withCredentials: true,
     })
 
-    dispatch({
-      type: USER_DELETE_SUCCESS,
-    })
+    dispatch({ type: USER_DELETE_SUCCESS })
   } catch (error) {
     dispatch({
       type: USER_DELETE_FAIL,
+      payload:
+        error.response && error.response.data
+          ? error.response.data
+          : error.message,
+    })
+  }
+}
+
+export const updateUser = (user) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_UPDATE_REQUEST })
+
+    const { data } = await axios.put(
+      `${process.env.REACT_APP_API_URL}/users/${user._id}`,
+      user,
+      {
+        withCredentials: true,
+      }
+    )
+
+    dispatch({ type: USER_UPDATE_SUCCESS })
+
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_FAIL,
       payload:
         error.response && error.response.data
           ? error.response.data

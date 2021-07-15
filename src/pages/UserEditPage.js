@@ -4,8 +4,9 @@ import { Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getUserDetails } from '../actions/userActions'
+import { getUserDetails, updateUser } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
+import { USER_UPDATE_RESET } from '../constants/userConstants'
 
 const UserEditPage = ({ match, history }) => {
   const userId = match.params.id
@@ -20,19 +21,32 @@ const UserEditPage = ({ match, history }) => {
   const userDetails = useSelector((state) => state.userDetails)
   const { loading, error, user } = userDetails
 
+  const userUpdate = useSelector((state) => state.userUpdate)
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = userUpdate
+
   useEffect(() => {
-    if ((!user.firstName && !user.lastName) || user._id !== userId) {
-      dispatch(getUserDetails(userId))
+    if (successUpdate) {
+      dispatch({ type: USER_UPDATE_RESET })
+      history.push('/admin/userlist')
     } else {
-      setFirstName(user.firstName)
-      setLastName(user.lastName)
-      setEmail(user.email)
-      setRole(user.role)
+      if ((!user.firstName && !user.lastName) || user._id !== userId) {
+        dispatch(getUserDetails(userId))
+      } else {
+        setFirstName(user.firstName)
+        setLastName(user.lastName)
+        setEmail(user.email)
+        setRole(user.role)
+      }
     }
-  }, [dispatch, userId, user])
+  }, [dispatch, userId, user, successUpdate, history])
 
   const submitHandler = (e) => {
     e.preventDefault()
+    dispatch(updateUser({ _id: userId, firstName, lastName, email, role }))
   }
 
   return (
@@ -42,6 +56,8 @@ const UserEditPage = ({ match, history }) => {
       </Link>
       <FormContainer>
         <h1>Edit User</h1>
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Loader />
         ) : error ? (
