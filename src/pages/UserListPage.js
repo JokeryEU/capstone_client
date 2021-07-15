@@ -47,7 +47,7 @@ const UserListPage = ({ history }) => {
               <th>NAME</th>
               <th>EMAIL</th>
               <th>ADMIN</th>
-              <th>ID</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
