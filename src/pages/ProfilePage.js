@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import moment from 'moment'
 import { Table, Button, Row, Col, Form } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -142,14 +143,14 @@ const ProfilePage = ({ history }) => {
                   <td>€{order.totalPrice}</td>
                   <td className="text-center">
                     {order.isPaid ? (
-                      order.paidAt.substring(0, 10)
+                      moment(order.paidAt).format('Do MMMM YYYY')
                     ) : (
                       <i className="fas fa-times" style={{ color: 'red' }} />
                     )}
                   </td>
                   <td className="text-center">
                     {order.isDelivered ? (
-                      order.deliveredAt.substring(0, 10)
+                      moment(order.deliveredAt).format('Do MMMM YYYY')
                     ) : (
                       <i className="fas fa-times" style={{ color: 'red' }} />
                     )}
