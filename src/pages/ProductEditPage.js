@@ -4,8 +4,9 @@ import { Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { listProductDetails } from '../actions/productActions'
+import { listProductDetails, updateProduct } from '../actions/productActions'
 import FormContainer from '../components/FormContainer'
+import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 
 const ProductEditPage = ({ match, history }) => {
   const productId = match.params.id
@@ -23,22 +24,46 @@ const ProductEditPage = ({ match, history }) => {
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
 
+  const productUpdate = useSelector((state) => state.productUpdate)
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = productUpdate
+
   useEffect(() => {
-    if (!product.name || product._id !== productId) {
-      dispatch(listProductDetails(productId))
+    if (successUpdate) {
+      dispatch({ type: PRODUCT_UPDATE_RESET })
+      history.push('/admin/productlist')
     } else {
-      setName(product.name)
-      setPrice(product.price)
-      setDescription(product.description)
-      setImage(product.image)
-      setBrand(product.brand)
-      setCategory(product.category)
-      setCountInStock(product.countInStock)
+      if (!product.name || product._id !== productId) {
+        dispatch(listProductDetails(productId))
+      } else {
+        setName(product.name)
+        setPrice(product.price)
+        setDescription(product.description)
+        setImage(product.image)
+        setBrand(product.brand)
+        setCategory(product.category)
+        setCountInStock(product.countInStock)
+      }
     }
-  }, [dispatch, productId, product, history])
+  }, [dispatch, productId, product, history, successUpdate])
 
   const submitHandler = (e) => {
     e.preventDefault()
+    dispatch(
+      updateProduct({
+        _id: productId,
+        name,
+        description,
+        price,
+        brand,
+        category,
+        countInStock,
+        image,
+      })
+    )
   }
 
   return (
@@ -48,7 +73,8 @@ const ProductEditPage = ({ match, history }) => {
       </Link>
       <FormContainer>
         <h1>Edit Product</h1>
-
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Loader />
         ) : error ? (
@@ -74,10 +100,10 @@ const ProductEditPage = ({ match, history }) => {
               />
             </Form.Group>
             <Form.Group controlId="image">
-              <Form.Label>Image</Form.Label>
-              <Form.Control
+              <Form.File
+                label="Enter images"
                 type="file"
-                placeholder="Enter images"
+                id="image-files"
                 value={image}
                 onChange={(e) => setImage(e.target.files[0])}
               />
