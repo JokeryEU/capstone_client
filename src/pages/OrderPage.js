@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import moment from 'moment'
+import { format, parseISO } from 'date-fns'
 import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { Row, Col, Card, ListGroup, Image } from 'react-bootstrap'
@@ -85,7 +85,7 @@ const OrderPage = ({ match }) => {
               {order.isDelivered ? (
                 <Message variant="success">
                   Delivered on{' '}
-                  {moment(order.deliveredAt).format('Do MMMM YYYY, h:mm:ss a')}
+                  {format(parseISO(order.deliveredAt), 'dd-MMM-yyyy | HH:mm')}
                 </Message>
               ) : (
                 <Message variant="danger">Not Delivered</Message>
@@ -100,7 +100,7 @@ const OrderPage = ({ match }) => {
               {order.isPaid ? (
                 <Message variant="success">
                   Paid on{' '}
-                  {moment(order.paidAt).format('Do MMMM YYYY, h:mm:ss a')}
+                  {format(parseISO(order.paidAt), 'dd-MMM-yyyy | HH:mm')}
                 </Message>
               ) : (
                 <Message variant="danger">Not Paid</Message>

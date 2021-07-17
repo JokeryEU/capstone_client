@@ -18,6 +18,7 @@ const ProductEditPage = ({ match, history }) => {
   const [brand, setBrand] = useState('')
   const [category, setCategory] = useState('')
   const [countInStock, setCountInStock] = useState(0)
+  console.log(image)
 
   const dispatch = useDispatch()
 
@@ -52,16 +53,21 @@ const ProductEditPage = ({ match, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
+    const form = new FormData()
+    form.append('name', name)
+    form.append('description', description)
+    form.append('price', price)
+    form.append('brand', brand)
+    form.append('category', category)
+    form.append('countInStock', countInStock)
+    form.append('prodImage', image)
+    for (const key of Object.keys(image)) {
+      form.append('prodImage', image[key])
+    }
     dispatch(
       updateProduct({
         _id: productId,
-        name,
-        description,
-        price,
-        brand,
-        category,
-        countInStock,
-        image,
+        body: form,
       })
     )
   }
@@ -103,9 +109,11 @@ const ProductEditPage = ({ match, history }) => {
               <Form.File
                 label="Enter images"
                 type="file"
-                id="image-files"
-                value={image}
-                onChange={(e) => setImage(e.target.files[0])}
+                multiple
+                name="prodImage"
+                onChange={(e) => {
+                  setImage(e.target.files)
+                }}
               />
             </Form.Group>
             <Form.Group controlId="brand">

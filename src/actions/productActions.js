@@ -107,7 +107,7 @@ export const updateProduct = (product) => async (dispatch) => {
 
     const { data } = await axios.put(
       `${process.env.REACT_APP_API_URL}/products/${product._id}`,
-      product,
+      product.body,
       {
         withCredentials: true,
       }
