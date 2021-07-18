@@ -76,6 +76,7 @@ export const logout = () => async (dispatch) => {
     dispatch({ type: USER_DETAILS_RESET })
     dispatch({ type: USER_LIST_RESET })
     dispatch({ type: ORDER_LIST_MY_ORDERS_RESET })
+    document.location.href = '/login'
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,

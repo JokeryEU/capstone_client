@@ -49,11 +49,11 @@ const OrderPage = ({ match, history }) => {
       script.type = 'text/javascript'
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
       script.async = true
-      script.onLoad = setSdkReady(true)
+      script.onload = () => setSdkReady(true)
       document.body.appendChild(script)
     }
 
-    if (!order || successPay || successDeliver) {
+    if (!order || successPay || successDeliver || order._id !== orderId) {
       dispatch({ type: ORDER_PAY_RESET })
       dispatch({ type: ORDER_DELIVER_RESET })
       dispatch(getOrderDetails(orderId))
@@ -64,7 +64,7 @@ const OrderPage = ({ match, history }) => {
         setSdkReady(true)
       }
     }
-  }, [dispatch, orderId, successPay, successDeliver, order])
+  }, [dispatch, orderId, successPay, successDeliver, order, history, userInfo])
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(orderId, paymentResult))
