@@ -13,6 +13,9 @@ import {
   ORDER_LIST_MY_ORDERS_REQUEST,
   ORDER_LIST_MY_ORDERS_SUCCESS,
   ORDER_LIST_MY_ORDERS_FAIL,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
+  ORDER_LIST_FAIL,
 } from '../constants/orderConstants'
 
 export const createOrder = (order) => async (dispatch) => {
@@ -110,6 +113,30 @@ export const listMyOrders = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ORDER_LIST_MY_ORDERS_FAIL,
+      payload:
+        error.response && error.response.data
+          ? error.response.data
+          : error.message,
+    })
+  }
+}
+
+export const listOrders = () => async (dispatch) => {
+  try {
+    dispatch({ type: ORDER_LIST_REQUEST })
+
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API_URL}/orders`,
+      { withCredentials: true }
+    )
+
+    dispatch({
+      type: ORDER_LIST_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: ORDER_LIST_FAIL,
       payload:
         error.response && error.response.data
           ? error.response.data
