@@ -189,7 +189,7 @@ const OrderPage = ({ match, history }) => {
                   <Col>€{order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              {!order.isPaid && (
+              {!order.isPaid && order.paymentMethod === 'PayPal' && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
                   {!sdkReady ? (
