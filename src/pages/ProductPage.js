@@ -60,7 +60,6 @@ const ProductPage = ({ history, match }) => {
 
   return (
     <>
-      <Meta />
       <Link to="/" className="btn btn-light my-3">
         Go Back
       </Link>
@@ -70,6 +69,7 @@ const ProductPage = ({ history, match }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
+          <Meta title={product.name} />
           <Row>
             <Col md={6}>
               <Image fluid src={product.image} alt={product.name} />
