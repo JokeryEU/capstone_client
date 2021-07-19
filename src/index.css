@@ -20,7 +20,7 @@ h2 {
   margin: 0.1rem;
 }
 
-.carousel-item-next,
+carousel-item-next,
 .carousel-item-prev,
 .carousel-item.active {
   display: flex;
@@ -35,10 +35,9 @@ h2 {
 }
 
 .carousel img {
-  height: 300px;
+  height: 350px;
   padding: 30px;
   margin: 40px;
-  border-radius: 50%;
   margin-left: auto;
   margin-right: auto;
 }
