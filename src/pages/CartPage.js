@@ -11,7 +11,6 @@ import {
   FormControl,
 } from 'react-bootstrap'
 import Message from '../components/Message'
-
 import { addToCart, removeFromCart } from '../actions/cartActions'
 
 const CartPage = ({ match, location, history }) => {
