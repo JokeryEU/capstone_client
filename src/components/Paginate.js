@@ -16,7 +16,7 @@ const Paginate = ({ pages, page, keyword, role = 'User' }) => {
                 : `/admin/productlist/${x + 1}`
             }
           >
-            <PaginationItem active={x + 1 === page}>{x + 1}</PaginationItem>
+            <Pagination.Item active={x + 1 === page}>{x + 1}</Pagination.Item>
           </LinkContainer>
         ))}
       </Pagination>
