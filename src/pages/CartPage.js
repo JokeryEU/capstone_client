@@ -67,11 +67,14 @@ const CartPage = ({ match, location, history }) => {
                         )
                       }
                     >
-                      {[...Array(item.countInStock).keys()].map((x) => (
-                        <option key={x + 1} value={x + 1}>
-                          {x + 1}
-                        </option>
-                      ))}
+                      {[...Array(item.countInStock).keys()].map(
+                        (x) =>
+                          x < 10 && (
+                            <option key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </option>
+                          )
+                      )}
                     </FormControl>
                   </Col>
                   <Col md={2}>
