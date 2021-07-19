@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
 import { format, parseISO } from 'date-fns'
 import {
   Row,
@@ -14,7 +15,7 @@ import {
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { useState, useEffect } from 'react'
+import Meta from '../components/Meta'
 import {
   listProductDetails,
   createProductReview,
@@ -59,6 +60,7 @@ const ProductPage = ({ history, match }) => {
 
   return (
     <>
+      <Meta />
       <Link to="/" className="btn btn-light my-3">
         Go Back
       </Link>
