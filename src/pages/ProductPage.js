@@ -184,6 +184,7 @@ const ProductPage = ({ history, match }) => {
                           as="select"
                           value={rating}
                           onChange={(e) => setRating(e.target.value)}
+                          required
                         >
                           <option value="">Select...</option>
                           <option value="1">1 - Poor</option>
@@ -200,6 +201,8 @@ const ProductPage = ({ history, match }) => {
                           rows="3"
                           value={comment}
                           onChange={(e) => setComment(e.target.value)}
+                          required
+                          minLength="5"
                         ></Form.Control>
                       </Form.Group>
                       <Button type="submit" variant="primary">
