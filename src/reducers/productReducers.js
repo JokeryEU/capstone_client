@@ -25,10 +25,13 @@ import {
   PRODUCT_TOP_RATED_FAIL,
 } from '../constants/productConstants'
 
-export const productListReducer = (state = { products: [] }, action) => {
+export const productListReducer = (
+  state = { products: [{ image: [] }] },
+  action
+) => {
   switch (action.type) {
     case PRODUCT_LIST_REQUEST:
-      return { loading: true, products: [] }
+      return { loading: true, products: [{ image: [] }] }
     case PRODUCT_LIST_SUCCESS:
       return {
         loading: false,
