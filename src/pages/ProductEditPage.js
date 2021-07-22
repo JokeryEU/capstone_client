@@ -110,7 +110,7 @@ const ProductEditPage = ({ match, history }) => {
                 label="Enter images"
                 type="file"
                 multiple
-                name="prodImage"
+                accept="images/*"
                 onChange={(e) => {
                   setImage(e.target.files)
                 }}

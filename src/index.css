@@ -20,6 +20,7 @@ h2 {
   margin: 0.1rem;
 }
 
+/* HomePage carousel */
 .carousel-item-next,
 .carousel-item-prev,
 .carousel-item.active {
@@ -34,18 +35,28 @@ h2 {
   color: #fff;
 }
 
-.carousel img {
+.homepage-carousel.carousel img {
   height: 350px;
   padding: 30px;
   margin: 40px;
   margin-left: auto;
   margin-right: auto;
 }
-.carousel a {
+.homepage-carousel.carousel a {
   margin: 0 auto;
 }
 @media (max-width: 900px) {
-  .carousel-caption h2 {
+  .homepage-carousel.carousel-caption h2 {
     font-size: 2.5vw;
   }
+}
+
+/* ProductPage carousel */
+.slider img {
+  height: 55vh;
+  object-fit: contain;
+}
+.thumbs img {
+  height: 7vh;
+  object-fit: contain;
 }

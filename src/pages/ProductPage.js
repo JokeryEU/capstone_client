@@ -5,13 +5,14 @@ import { format, parseISO } from 'date-fns'
 import {
   Row,
   Col,
-  Image,
   ListGroup,
   Card,
   Button,
   FormControl,
   Form,
 } from 'react-bootstrap'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import { Carousel } from 'react-responsive-carousel'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -72,7 +73,11 @@ const ProductPage = ({ history, match }) => {
           <Meta title={product.name} />
           <Row>
             <Col md={6}>
-              <Image fluid src={product.image} alt={product.name} />
+              <Carousel infiniteLoop>
+                {product.image.map((img, index) => (
+                  <img key={index} src={img} alt={product.name} />
+                ))}
+              </Carousel>
             </Col>
             <Col md={3}>
               <ListGroup variant="flush">
