@@ -85,7 +85,7 @@ const PlaceOrderPage = ({ history }) => {
                           <Image
                             fluid
                             rounded
-                            src={item.image}
+                            src={item.image[0]}
                             alt={item.name}
                           />
                         </Col>
