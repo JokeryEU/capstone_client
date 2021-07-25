@@ -24,7 +24,7 @@ const SearchBox = ({ history }) => {
           setKeyword(e.target.value)
         }}
       ></Form.Control>
-      <Button type="submit" variant="outline-success" className="p-2">
+      <Button type="submit" hidden variant="outline-success" className="p-2">
         Search
       </Button>
     </Form>
