@@ -18,7 +18,6 @@ const ProductEditPage = ({ match, history }) => {
   const [brand, setBrand] = useState('')
   const [category, setCategory] = useState('')
   const [countInStock, setCountInStock] = useState(0)
-  console.log(image)
 
   const dispatch = useDispatch()
 
@@ -64,6 +63,7 @@ const ProductEditPage = ({ match, history }) => {
     for (const key of Object.keys(image)) {
       form.append('prodImage', image[key])
     }
+
     dispatch(
       updateProduct({
         _id: productId,
