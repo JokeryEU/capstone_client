@@ -1,5 +1,7 @@
 # capstone_client
 
+Deployed: https://onestopshop-test.vercel.app
+
 Its a work in progress, its missing some features and contains bugs.
 
 Currently you can browse the products, login/register/addToCart/shippingAddress/paymentMethod(only Paypal is working)
