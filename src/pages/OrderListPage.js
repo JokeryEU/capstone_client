@@ -48,7 +48,11 @@ const OrderListPage = ({ history }) => {
             {orders.map((order) => (
               <tr key={order._id}>
                 <td>{order._id}</td>
-                <td>{order.user.firstName + ' ' + order.user.lastName}</td>
+                <td>
+                  {order.user
+                    ? order.user.firstName + ' ' + order.user.lastName
+                    : 'User DELETED'}
+                </td>
                 <td>{format(parseISO(order.createdAt), 'dd-MMM-yyyy')}</td>
                 <td>€{order.totalPrice}</td>
                 <td className="text-center">
