@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { saveShippingAddress } from '../actions/cartActions'
+import { useNavigate } from 'react-router'
 
-const ShippingPage = ({ history }) => {
+const ShippingPage = () => {
+  const navigate = useNavigate()
   const cart = useSelector((state) => state.cart)
   const { shippingAddress } = cart
 
@@ -22,7 +24,7 @@ const ShippingPage = ({ history }) => {
     dispatch(
       saveShippingAddress({ address, city, country, postalCode, phoneNumber })
     )
-    history.push('/payment')
+    navigate('/payment')
   }
 
   return (

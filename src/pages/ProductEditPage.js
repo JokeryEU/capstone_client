@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
@@ -8,8 +8,10 @@ import { listProductDetails, updateProduct } from '../actions/productActions'
 import FormContainer from '../components/FormContainer'
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 
-const ProductEditPage = ({ match, history }) => {
-  const productId = match.params.id
+const ProductEditPage = () => {
+  const navigate = useNavigate()
+  const params = useParams()
+  const productId = params.id
 
   const [name, setName] = useState('')
   const [price, setPrice] = useState(0)
@@ -34,7 +36,7 @@ const ProductEditPage = ({ match, history }) => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET })
-      history.push('/admin/productlist')
+      navigate('/admin/productlist')
     } else {
       if (!product.name || product._id !== productId) {
         dispatch(listProductDetails(productId))
@@ -48,7 +50,7 @@ const ProductEditPage = ({ match, history }) => {
         setCountInStock(product.countInStock)
       }
     }
-  }, [dispatch, productId, product, history, successUpdate])
+  }, [dispatch, productId, product, navigate, successUpdate])
 
   const submitHandler = (e) => {
     e.preventDefault()

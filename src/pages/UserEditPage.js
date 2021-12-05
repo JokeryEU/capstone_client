@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
@@ -8,8 +8,10 @@ import { getUserDetails, updateUser } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 import { USER_UPDATE_RESET } from '../constants/userConstants'
 
-const UserEditPage = ({ match, history }) => {
-  const userId = match.params.id
+const UserEditPage = () => {
+  const navigate = useNavigate()
+  const params = useParams()
+  const userId = params.id
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -31,7 +33,7 @@ const UserEditPage = ({ match, history }) => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: USER_UPDATE_RESET })
-      history.push('/admin/userlist')
+      navigate('/admin/userlist')
     } else {
       if ((!user.firstName && !user.lastName) || user._id !== userId) {
         dispatch(getUserDetails(userId))
@@ -42,7 +44,7 @@ const UserEditPage = ({ match, history }) => {
         setRole(user.role)
       }
     }
-  }, [dispatch, userId, user, successUpdate, history])
+  }, [dispatch, userId, user, successUpdate, navigate])
 
   const submitHandler = (e) => {
     e.preventDefault()

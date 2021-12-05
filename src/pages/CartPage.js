@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Row,
@@ -13,10 +13,15 @@ import {
 import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 
-const CartPage = ({ match, location, history }) => {
-  const productId = match.params.id
+const CartPage = () => {
+  const navigate = useNavigate()
+  const params = useParams()
+  const productId = params.id
 
-  const qty = location.search ? Number(location.search.split('=')[1]) : 1
+  const { search } = useLocation()
+
+  const qtyInUrl = new URLSearchParams(search).get('qty')
+  const qty = qtyInUrl ? Number(qtyInUrl) : 1
 
   const dispatch = useDispatch()
 
@@ -34,7 +39,7 @@ const CartPage = ({ match, location, history }) => {
   }
 
   const checkoutHandler = () => {
-    history.push('/login?redirect=shipping')
+    navigate('/login?redirect=shipping')
   }
 
   return (

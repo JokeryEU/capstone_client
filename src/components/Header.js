@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Route } from 'react-router-dom'
 import { Navbar, Nav, NavDropdown, Container, Badge } from 'react-bootstrap'
 import SearchBox from '../components/SearchBox'
 import { logout } from '../actions/userActions'
@@ -27,7 +26,7 @@ const Header = () => {
           <LinkContainer to="/">
             <Navbar.Brand>OneStopShop</Navbar.Brand>
           </LinkContainer>
-          <Route render={({ history }) => <SearchBox history={history} />} />
+          <SearchBox />
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="text-right">
             <Nav className="ml-auto">

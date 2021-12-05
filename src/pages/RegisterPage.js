@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Button, Row, Col, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
@@ -7,7 +7,9 @@ import Loader from '../components/Loader'
 import { register } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 
-const RegisterPage = ({ location, history }) => {
+const RegisterPage = () => {
+  const navigate = useNavigate()
+  const { search } = useLocation()
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
@@ -20,13 +22,14 @@ const RegisterPage = ({ location, history }) => {
   const userRegister = useSelector((state) => state.userRegister)
   const { loading, error, userInfo } = userRegister
 
-  const redirect = location.search ? location.search.split('=')[1] : '/'
+  const redirectInUrl = new URLSearchParams(search).get('redirect')
+  const redirect = redirectInUrl ? redirectInUrl : '/'
 
   useEffect(() => {
     if (userInfo) {
-      history.push(redirect)
+      navigate(redirect)
     }
-  }, [history, userInfo, redirect])
+  }, [navigate, userInfo, redirect])
 
   const submitHandler = (e) => {
     e.preventDefault()

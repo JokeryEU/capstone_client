@@ -11,9 +11,12 @@ import {
   createProduct,
 } from '../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
+import { useNavigate, useParams } from 'react-router'
 
-const ProductListPage = ({ history, match }) => {
-  const pageNumber = match.params.pageNumber || 1
+const ProductListPage = ({ history }) => {
+  const navigate = useNavigate()
+  const params = useParams()
+  const pageNumber = params.pageNumber || 1
 
   const dispatch = useDispatch()
 
@@ -41,17 +44,17 @@ const ProductListPage = ({ history, match }) => {
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET })
     if (!userInfo.role === 'Admin') {
-      history.push('/login')
+      navigate('/login')
     }
     if (successCreate) {
-      history.push(`/admin/product/${createdProduct._id}/edit`)
+      navigate(`/admin/product/${createdProduct._id}/edit`)
     } else {
       dispatch(listProducts('', pageNumber))
     }
   }, [
     dispatch,
     userInfo,
-    history,
+    navigate,
     successDelete,
     successCreate,
     createdProduct,

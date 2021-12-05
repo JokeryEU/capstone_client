@@ -1,12 +1,13 @@
 import { useEffect } from 'react'
 import { Button, Row, Col, Card, ListGroup, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { createOrder } from '../actions/orderActions'
 
-const PlaceOrderPage = ({ history }) => {
+const PlaceOrderPage = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
 
@@ -34,9 +35,9 @@ const PlaceOrderPage = ({ history }) => {
 
   useEffect(() => {
     if (success) {
-      history.push(`/order/${order._id}`)
+      navigate(`/order/${order._id}`)
     }
-  }, [history, success, order])
+  }, [navigate, success, order])
 
   const placeOrderHandler = () => {
     dispatch(

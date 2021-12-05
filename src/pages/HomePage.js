@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
 import Message from '../components/Message'
@@ -10,9 +10,10 @@ import ProductCarousel from '../components/ProductCarousel'
 import Meta from '../components/Meta'
 import { listProducts } from '../actions/productActions'
 
-const HomePage = ({ match }) => {
-  const keyword = match.params.keyword
-  const pageNumber = match.params.pageNumber || 1
+const HomePage = () => {
+  const params = useParams()
+  const keyword = params.keyword
+  const pageNumber = params.pageNumber || 1
 
   const dispatch = useDispatch()
 

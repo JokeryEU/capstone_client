@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { deleteUser, listUsers } from '../actions/userActions'
+import { useNavigate } from 'react-router'
 
-const UserListPage = ({ history }) => {
+const UserListPage = () => {
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const userList = useSelector((state) => state.userList)
   const { loading, error, users } = userList
 
@@ -22,9 +23,9 @@ const UserListPage = ({ history }) => {
     if (userInfo && userInfo.role === 'Admin') {
       dispatch(listUsers())
     } else {
-      history.push('/login')
+      navigate('/login')
     }
-  }, [dispatch, userInfo, history, successDelete])
+  }, [dispatch, userInfo, navigate, successDelete])
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure you want to delete the user')) {

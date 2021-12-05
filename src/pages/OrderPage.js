@@ -4,7 +4,7 @@ import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { Row, Col, Card, ListGroup, Image, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import {
@@ -17,8 +17,10 @@ import {
   ORDER_DELIVER_RESET,
 } from '../constants/orderConstants'
 
-const OrderPage = ({ match, history }) => {
-  const orderId = match.params.id
+const OrderPage = () => {
+  const navigate = useNavigate()
+  const params = useParams()
+  const orderId = params.id
 
   const [sdkReady, setSdkReady] = useState(false)
 
@@ -38,7 +40,7 @@ const OrderPage = ({ match, history }) => {
 
   useEffect(() => {
     if (!userInfo) {
-      history.push('/login')
+      navigate('/login')
     }
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get(
@@ -64,7 +66,7 @@ const OrderPage = ({ match, history }) => {
         setSdkReady(true)
       }
     }
-  }, [dispatch, orderId, successPay, successDeliver, order, history, userInfo])
+  }, [dispatch, orderId, successPay, successDeliver, order, navigate, userInfo])
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(orderId, paymentResult))
@@ -88,11 +90,13 @@ const OrderPage = ({ match, history }) => {
               <h2>Shipping</h2>
               <p>
                 <span className="font-weight-bold">Name: </span>
-                {order.user.firstName + ' ' + order.user.lastName}
+                {order.user
+                  ? order.user.firstName + ' ' + order.user.lastName
+                  : 'USER DELETED'}
               </p>
               <p>
                 <span className="font-weight-bold">Email: </span>
-                {order.user.email}
+                {order.user?.email}
               </p>
               <p>
                 <span className="font-weight-bold">Address: </span>

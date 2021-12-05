@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { listOrders } from '../actions/orderActions'
+import { useNavigate } from 'react-router'
 
-const OrderListPage = ({ history }) => {
+const OrderListPage = () => {
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const orderList = useSelector((state) => state.orderList)
   const { loading, error, orders } = orderList
 
@@ -20,9 +21,9 @@ const OrderListPage = ({ history }) => {
     if (userInfo && userInfo.role === 'Admin') {
       dispatch(listOrders())
     } else {
-      history.push('/login')
+      navigate('/login')
     }
-  }, [dispatch, userInfo, history])
+  }, [dispatch, userInfo, navigate])
 
   return (
     <>

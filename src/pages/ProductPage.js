@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { format, parseISO } from 'date-fns'
@@ -23,7 +23,9 @@ import {
 } from '../actions/productActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
-const ProductPage = ({ history, match }) => {
+const ProductPage = () => {
+  const navigate = useNavigate()
+  const params = useParams()
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
@@ -47,16 +49,16 @@ const ProductPage = ({ history, match }) => {
       setComment('')
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
-    dispatch(listProductDetails(match.params.id))
-  }, [dispatch, match, successProductReview])
+    dispatch(listProductDetails(params.id))
+  }, [dispatch, params, successProductReview])
 
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`)
+    navigate(`/cart/${params.id}?qty=${qty}`)
   }
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(createProductReview(match.params.id, { rating, comment }))
+    dispatch(createProductReview(params.id, { rating, comment }))
   }
 
   return (
