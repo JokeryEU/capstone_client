@@ -26,6 +26,7 @@ import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 const ProductPage = () => {
   const navigate = useNavigate()
   const params = useParams()
+
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
@@ -74,14 +75,14 @@ const ProductPage = () => {
         <>
           <Meta title={product.name} />
           <Row>
-            <Col md={6}>
+            <Col md={4}>
               <Carousel infiniteLoop>
                 {product.image.map((img, index) => (
                   <img key={index} src={img} alt={product.name} />
                 ))}
               </Carousel>
             </Col>
-            <Col md={3}>
+            <Col md={5}>
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <h3>{product.name}</h3>
