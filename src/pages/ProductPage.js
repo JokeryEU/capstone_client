@@ -219,7 +219,7 @@ const ProductPage = () => {
                     </Form>
                   ) : (
                     <Message>
-                      Please <Link to="/login">sign in</Link> to write a review
+                      Please <Link to="/login">Sign In</Link> to write a review
                     </Message>
                   )}
                 </ListGroup.Item>
