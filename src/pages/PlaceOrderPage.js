@@ -17,7 +17,7 @@ const PlaceOrderPage = () => {
   }
 
   cart.itemsPrice = addDecimals(
-    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    cart.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
   )
 
   cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 30)
@@ -96,7 +96,8 @@ const PlaceOrderPage = () => {
                           </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x €{item.price} = €{item.qty * item.price}
+                          {item.quantity} x €{item.price} = €
+                          {item.quantity * item.price}
                         </Col>
                       </Row>
                     </ListGroup.Item>

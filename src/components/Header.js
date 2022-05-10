@@ -17,7 +17,10 @@ const Header = () => {
     dispatch(logout())
   }
 
-  const calculateCartQty = cartItems.reduce((acc, item) => acc + item.qty, 0)
+  const calculateCartQty = cartItems.reduce(
+    (acc, item) => acc + item.quantity,
+    0
+  )
 
   return (
     <header>
